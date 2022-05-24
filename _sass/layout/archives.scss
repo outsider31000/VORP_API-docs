@@ -20,7 +20,8 @@
     position: relative;
     left: 8px;
 
-    &::after { /* Year dot */
+    &::after {
+      /* Year dot */
       content: "";
       display: block;
       position: relative;
@@ -34,7 +35,7 @@
       border: 3px solid;
       background-color: var(--timeline-year-dot-color);
       border-color: var(--timeline-node-bg);
-      box-shadow: 0 0 2px 0 #c2c6cc;
+      box-shadow: 0 0 2px 0 #ccc8c2;
       z-index: 1;
     }
 
@@ -47,7 +48,9 @@
       }
     }
 
-  } // #archives span.lead
+  }
+
+  // #archives span.lead
 
   ul {
     li {
@@ -87,14 +90,16 @@
       }
     }
 
-    &:not(:last-child) > li:last-child::after {
+    &:not(:last-child)>li:last-child::after {
       height: 3.4rem;
     }
 
-    &:last-child > li:last-child::after {
+    &:last-child>li:last-child::after {
       display: none;
     }
-  } // #archives ul
+  }
+
+  // #archives ul
 
   .date {
     white-space: nowrap;
@@ -104,7 +109,7 @@
       width: 1.4rem;
       text-align: center;
 
-      ~ a::before {
+      ~a::before {
         /* A dot for Month and Day */
         content: "";
         display: inline-block;
@@ -132,9 +137,13 @@
       position: relative;
       left: -0.15rem;
     }
-  } // #archives .date
+  }
 
-} // #archives
+  // #archives .date
+
+}
+
+// #archives
 
 @media all and (max-width: 576px) {
   #archives {

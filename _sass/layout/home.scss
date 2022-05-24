@@ -39,7 +39,7 @@
       cursor: not-allowed;
 
       .page-link {
-        color: rgba(108, 117, 125, 0.57);
+        color: rgba(245, 193, 97, 0.826);
         border-color: var(--btn-paginator-border-color);
         background-color: var(--button-bg);
       }
@@ -49,9 +49,13 @@
     &:last-child .page-link {
       border-radius: 50%;
     }
-  } // .page-item
+  }
 
-} // .pagination
+  // .page-item
+
+}
+
+// .pagination
 
 #post-list {
   margin-top: 1rem;
@@ -90,7 +94,7 @@
       margin-bottom: 0.6rem;
       color: var(--post-list-text-color);
 
-      > p {
+      >p {
         /* Make preview shorter on the homepage */
         margin: 0;
         overflow: hidden;
@@ -102,19 +106,23 @@
     }
 
     .pin {
-      > i {
+      >i {
         transform: rotate(45deg);
         padding-left: 3px;
         color: var(--pin-color);
       }
 
-      > span {
+      >span {
         display: none;
       }
     }
 
-  } // .post-preview
-} // #post-list
+  }
+
+  // .post-preview
+}
+
+// #post-list
 
 /* Hide SideBar and TOC */
 @media all and (max-width: 830px) {
@@ -146,7 +154,7 @@
         padding-left: 1px;
         padding-right: 6px;
 
-        > span {
+        >span {
           display: inline;
         }
       }
@@ -172,7 +180,9 @@
       display: none;
     }
 
-  } // .pagination
+  }
+
+  // .pagination
 
 }
 

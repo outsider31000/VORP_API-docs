@@ -31,14 +31,16 @@
 
   }
 
-} // .categories
+}
+
+// .categories
 
 .category-trigger {
   width: 1.7rem;
   height: 1.7rem;
   border-radius: 50%;
   text-align: center;
-  color: #6c757d !important;
+  color: #7d766c !important;
 
   &:hover {
     i {
@@ -54,14 +56,18 @@
   }
 }
 
-@media (hover: hover) { // only works on desktop
+@media (hover: hover) {
+
+  // only works on desktop
   .category-trigger:hover {
     background-color: var(--categories-hover-bg);
   }
 }
 
 .rotate {
-  -ms-transform: rotate(-90deg); /* IE 9 */
-  -webkit-transform: rotate(-90deg); /* Safari 3-8 */
+  -ms-transform: rotate(-90deg);
+  /* IE 9 */
+  -webkit-transform: rotate(-90deg);
+  /* Safari 3-8 */
   transform: rotate(-90deg);
 }
