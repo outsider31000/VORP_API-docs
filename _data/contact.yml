@@ -1,25 +1,26 @@
-#  The contact options.
+#  The contact options for side bar
 
 -
   type: github
   icon: 'fab fa-github'
 -
-  type: twitter
-  icon: 'fab fa-twitter'
+  type: discord
+  icon: 'fab fa-discord'   # icons powered by <https://fontawesome.com/>
+  url:  'https://discord.gg/DHGVAbCj7N'  
 -
-  type: email
-  icon: 'fas fa-envelope'
-  noblank: true            # open link in current tab
+  #type: 
+ # icon: ''
+ # noblank: true            # open link in current tab
 -
-  type: rss
-  icon: 'fas fa-rss'
-  noblank: true
+ # type: 
+ # icon: ''
+  #noblank: true
 
 # Uncomment and complete the url below to enable more contact options
 # -
-#   type: mastodon
-#   icon: 'fab fa-mastodon'   # icons powered by <https://fontawesome.com/>
-#   url:  ''                  # Fill with your mastodon account page
+# type: discord
+# icon: 'fab fa-discord'   # icons powered by <https://fontawesome.com/>
+#  url:  ''                  # Fill with your mastodon account page
 # -
 #   type: linkedin
 #   icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
