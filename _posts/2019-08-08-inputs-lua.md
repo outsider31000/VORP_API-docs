@@ -9,7 +9,7 @@ render_with_liquid: false
 
 ### vorp inputs is a tool that is mandatory within the vorp framework. 
 
-[`VORP INPUTS LUA`][inputs] **downlaod**
+[`VORP INPUTS LUA`][inputs] **download**
 
 # **USAGE**
 --------------------
@@ -35,7 +35,7 @@ local placeholder = "Text here"
 
 ```
 
-
+![image](/assets/img/sample/inputs2.jpg)
 
 
 ### ***with input Type***
@@ -84,12 +84,12 @@ end)
 
 ```
 
-
+![image](/assets/img/sample/inputs.jpg)
 
 -------
 ### ***devtips***
 
- **split a string into more than one**
+ **split a string into more than one separated by a space**
 
  ```lua
 
