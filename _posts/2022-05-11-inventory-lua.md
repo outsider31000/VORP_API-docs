@@ -27,10 +27,11 @@ VORPInv = exports.vorp_inventory:vorp_inventoryApi()
 ```
 
 ### ***Item API***
-You can use the API to give, delete, register item utility, get quantities and even ask if the player can carry the item.
+You can use the API `server` side to give, delete, register item utility, get quantities and even ask if the player can carry the item.
 
 #### Add Item
 ```lua
+-- give an item
 VorpInv.addItem(source, itemName, qty, metadata)
 ```
 
@@ -44,6 +45,7 @@ VorpInv.addItem(source, itemName, qty, metadata)
 
 #### Sub Item
 ```lua
+--remove an item
 VorpInv.subItem(source, itemName, qty, metadata)
 ```
 
@@ -56,6 +58,7 @@ VorpInv.subItem(source, itemName, qty, metadata)
 
 #### Get Item
 ```lua
+--get item player have in inventory
 local item = VorpInv.getItem(source, itemName, metadata)
 ```
 
@@ -71,13 +74,14 @@ local item = VorpInv.getItem(source, itemName, metadata)
 
 #### Get Item Count
 ```lua
+-- get the count of an item player has in inventory
 local itemCount = VorpInv.getItemCount(source, itemName, metadata)
 ```
 
 | Parameter | Type         | Description                                            | Required ? |
 |-----------|--------------|--------------------------------------------------------|------------|
 | source    | Number       | The player id in game                                  | True       |
-| itemName  | String       | The name of the item to count                          | True       |
+| itemName  | String       | The name of the item to get count                      | True       |
 | metadata  | Table        | An object containing all custom data of item to remove | False      |
 
 | Return   | Type   | Description                                          |
@@ -86,6 +90,7 @@ local itemCount = VorpInv.getItemCount(source, itemName, metadata)
 
 #### Can Carry Item
 ```lua
+-- checks item limit
 local canCarry = VorpInv.cancarryitem(source, itemName, amount)
 ```
 
@@ -101,6 +106,7 @@ local canCarry = VorpInv.cancarryitem(source, itemName, amount)
 
 #### Can Carry Items
 ```lua
+-- checks inventory limit
 local canCarry = VorpInv.CanCarryItems(source, amount)
 ```
 
@@ -115,13 +121,28 @@ local canCarry = VorpInv.CanCarryItems(source, amount)
 
 #### Register Usable Item
 ```lua
-VorpInv.CanCarryItems(itemName, cb)
+local itemName = "bread"
+VorpInv.RegisterUsableItem(itemName, function(data)
+  print(data.source) -- player using the item
+  print(data.label)  -- item label
+end)
+
 ```
 
 | Parameter | Type     | Description                                            | Required ? |
 |-----------|----------|--------------------------------------------------------|------------|
 | itemName  | String   | The name of the item to count                          | True       |
-| cb        | Function | The function that will be called with the item is used | True       |
+| data      | Function | The function that will be called                       | True       |
+
+| Return   | Type                | Description                                          |
+|----------|---------------------|------------------------------------------------------|
+| data.source| number            | returns server ID                                    |
+| data.label| string             | returns item Lable from DB                           |
+
+
+
+
+
 
 #### Get DB Item
 ```lua
@@ -135,7 +156,7 @@ local item = VorpInv.getDBItem(source, itemName)
 
 | Return   | Type                | Description                                          |
 |----------|---------------------|------------------------------------------------------|
-| Return   | Table (Item) or nil | The total count of selected item in player inventory |
+| statment | true/false          | check if item exists in DB                           |
 
 
 ### Weapons API
@@ -148,23 +169,25 @@ VorpInv.creatWeapon(source, weaponName, ammo, comp)
 
 | Parameter  | Type   | Description                    | Required ? |
 |------------|--------|--------------------------------|------------|
-| source     | Number | The player id in game          | True       |
-| weaponName | String | The name of the weapon to add  | True       |
+| source     | Number | The server player id           | True       |
+| weaponName | String | The hashname of the weapon to add  | True       |
 | ammo       | Table  | An array containing start ammo | False      |
 | comp       | Table  | An array containing start comp | False      |
 
 #### Sub Weapon
 ```lua
+-- remove weapon
 VorpInv.subWeapon(source, weaponId)
 ```
 
 | Parameter | Type   | Description                    | Required ? |
 |-----------|--------|--------------------------------|------------|
 | source    | Number | The player id in game          | True       |
-| weaponId  | Number | The id of the weapon to remove | True       |
+| weaponId  | Number | The id of the weapon to remove DB | True       |
 
 #### Give Weapon
 ```lua
+--give weapon from one player to another
 VorpInv.giveWeapon(source, weaponId, target)
 ```
 
@@ -255,7 +278,14 @@ local weapon = VorpInv.getUserWeapon(source, weaponId)
 
 #### Can Carry Weapons
 ```lua
-VorpInv.canCarryWeapons(source, amount, cb)
+VorpInv.canCarryWeapons(source, amount, function(cb) --can carry weapons
+    local canCarry = cb
+    if canCarry then
+        --give weapon
+    else
+      --cant carry
+    end
+end)
 ```
 
 | Parameter | Type               | Description                                        | Required ? |
@@ -271,6 +301,7 @@ You can use the API to open or close the player Inventory, and register custom p
 #### Get Inventory
 ```lua
 local inventory = VorpInv.getUserInventory(source)
+print(inventory)
 ```
 
 | Parameter | Type   | Description           | Required ? |
@@ -292,7 +323,7 @@ VorpInv.OpenInv(source)
 
 #### Close Player Inventory
 ```lua
-VorpInv.OpenInv(source)
+VorpInv.CloseInv(source)
 ```
 
 | Parameter | Type   | Description           | Required ? |
