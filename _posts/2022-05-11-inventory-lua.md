@@ -365,7 +365,7 @@ VorpInv.openInventory(source, id)
 
 #### Close Custom Inventory
 ```lua
-VorpInv.openInventory(source, id)
+VorpInv.closeInventory(source, id)
 ```
 
 | Parameter | Type   | Description                             | Required ? |
