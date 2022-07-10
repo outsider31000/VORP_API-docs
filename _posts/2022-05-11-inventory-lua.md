@@ -314,21 +314,26 @@ print(inventory)
 
 #### Open Player Inventory
 ```lua
-VorpInv.OpenInv(source)
+-- opens source inventory to source or the invid (secondary inv) to source
+VorpInv.OpenInv(source,invID) 
+-- to open custom inventory or play inventory
 ```
 
 | Parameter | Type   | Description           | Required ? |
 |-----------|--------|-----------------------|------------|
 | source    | Number | The player id in game | True       |
+| invID     | Number | The secondary inventory ID  | false  |
 
 #### Close Player Inventory
 ```lua
-VorpInv.CloseInv(source)
+-- close source inv or close (secondary inv) with its ID
+VorpInv.CloseInv(source,invID)
 ```
 
 | Parameter | Type   | Description           | Required ? |
 |-----------|--------|-----------------------|------------|
 | source    | Number | The player id in game | True       |
+| invID     | Number | The secondary inventory ID  | false  |
 
 #### Register Inventory
 ```lua
@@ -353,25 +358,6 @@ VorpInv.removeInventory(id)
 |---------------|--------|------------------------------------------|------------|
 | id            | String | The id of the custom inventory to remove | True       |
 
-#### Open Custom Inventory
-```lua
-VorpInv.openInventory(source, id)
-```
-
-| Parameter | Type   | Description                            | Required ? |
-|-----------|--------|----------------------------------------|------------|
-| source    | Number | The player id in game                  | True       |
-| id        | String | The id of the custom inventory to open | True       |
-
-#### Close Custom Inventory
-```lua
-VorpInv.closeInventory(source, id)
-```
-
-| Parameter | Type   | Description                             | Required ? |
-|-----------|--------|-----------------------------------------|------------|
-| source    | Number | The player id in game                   | True       |
-| id        | String | The id of the custom inventory to close | True       |
 
 #### Set Custom Inventory Item Limit
 ```lua
