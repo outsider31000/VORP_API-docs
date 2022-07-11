@@ -164,7 +164,7 @@ You can use the API to add, delete and get weapons, ad, remove or get weapon bul
 
 #### Add Weapon
 ```lua
-VorpInv.creatWeapon(source, weaponName, ammo, comp)
+VorpInv.createWeapon(source, weaponName, ammo, comp)
 ```
 
 | Parameter  | Type   | Description                    | Required ? |
