@@ -8,72 +8,84 @@ math: true
 mermaid: true
 ---
 
-# ***VORP CHARACTERS Lua***
+# ***VORP CHARACTERS***
 
-This gives you the players clothes and skin from the server side in text.
+* This code gives you the players clothes and skin from the `server` side.
 
 ```lua
+-- server side
 TriggerEvent("vorpcharacter:getPlayerComps", _source, function(data)
     local json_skin = data.skins
 	local json_cloths = data.cloths
 end)
 ```
 
-This gives you the players clothes and skin from the client side in a dictionary.
-It comes from the client cache.
+* This gives you the players clothes and skin from the client side.
+It comes from the `client cache`.
 
 
 ```lua
+-- client side
 TriggerEvent("vorpcharacter:getPlayerComps", _source, function(skin, cloths)
     local beard = skin.Beard -- Beard is in the database 
 	local hat = cloths.Hat -- Hat is in the database
 end)
 ```
 
-This sets one component of the player skin and saves it in the database.
-This comes from the server side.
-
+* This sets one component of the player skin and saves it in the database.
+This comes from the `server` side.
 
 ```lua
+-- server side
+
+local _source = source
+local CompHash = "component hash"
 TriggerEvent("vorpcharacter:setPlayerSkinChange", _source, "Beard", CompHash)
+
 ```
 
-This sets one component of the player clothes and saves it in the database.
-This comes from the server side.
+* This sets one component of the player clothes and saves it in the database.
+This comes from the `server` side.
 
 
 ```lua
+-- server side
+local _source = source
+local CompHash = "component hash"
+
 TriggerEvent("vorpcharacter:setPlayerSkinChange", _source, "Hat", CompHash)
 ```
 
-This refreshes the player skin that is saved in the client cache.
+* This refreshes the player skin that is saved in the `client cache`.
 
 ```lua
+--client side
 TriggerEvent("vorpcharacter:refreshPlayerSkin")
 ```
 
-This refreshes the player skin from the database.
-This comes from the clients side.
+* This refreshes the player skin from the database.
+This comes from the `client` side.
 
 
 ```lua
+-- client side
 TriggerServerEvent("vorpcharacter:getPlayerSkin")
 ```
 
-You can get a list of components with all the clothes from vorp_character using this callback event.
+* You can get a list of components with `all the clothes` from vorp_character using this callback event.
 
 
 ```lua
-TriggerEvent("vorpcharacter:getSkinComps", "hats_male", function(comp)
-    for k,v in pairs(comp) do
+TriggerEvent("vorpcharacter:getSkinComps", "hats_male", function(components)
+    for index,value in pairs(components) do
         print(tostring(v))
     end
 end)
 
---This returns a list with the component, it contains uint **comp** inside.
-
 ```
-Parameters:
+* It returns a list with the components
+
+**Parameters:**
 
 - **hats_male** returns the ***male hats*** list
 - **hats_female** returns the ***female hats*** list
