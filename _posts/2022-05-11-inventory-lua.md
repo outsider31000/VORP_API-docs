@@ -91,7 +91,7 @@ local itemCount = VorpInv.getItemCount(source, itemName, metadata)
 #### Can Carry Item
 ```lua
 -- checks item limit
-local canCarry = VorpInv.cancarryitem(source, itemName, amount)
+local canCarry = VorpInv.canCarryItem(source, itemName, amount)
 ```
 
 | Parameter | Type   | Description                                                  | Required ? |
