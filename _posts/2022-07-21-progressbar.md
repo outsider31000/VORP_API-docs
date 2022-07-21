@@ -3,7 +3,7 @@ title: PROGRESSBAR
 author: bytesizd
 date: 2022-07-21 02:24:00 +0800
 categories: [Documentation Lua, PROGRESSBAR]
-tags: [Lua, Client, UI]
+tags: [Lua, UI]
 math: true
 mermaid: true
 ---
