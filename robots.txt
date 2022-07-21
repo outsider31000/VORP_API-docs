@@ -1,0 +1,5 @@
+User-agent: *
+
+Disallow: /norobots/
+
+Sitemap: https://outsider31000.github.io/VORP_API-docs/sitemap.xml

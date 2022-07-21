@@ -1,0 +1,541 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.2.2" /><meta property="og:title" content="VORP CORE" /><meta name="author" content="outsider" /><meta property="og:locale" content="en" /><meta name="description" content="VORP core is the master tool for all your projects" /><meta property="og:description" content="VORP core is the master tool for all your projects" /><link rel="canonical" href="https://outsider31000.github.io/VORP_API-docs/posts/core-lua/" /><meta property="og:url" content="https://outsider31000.github.io/VORP_API-docs/posts/core-lua/" /><meta property="og:site_name" content="VORP API docs" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-05-15T04:33:00+01:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="VORP CORE" /><meta name="twitter:site" content="@" /><meta name="twitter:creator" content="@outsider" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"outsider"},"dateModified":"2022-07-21T21:34:15+01:00","datePublished":"2022-05-15T04:33:00+01:00","description":"VORP core is the master tool for all your projects","headline":"VORP CORE","mainEntityOfPage":{"@type":"WebPage","@id":"https://outsider31000.github.io/VORP_API-docs/posts/core-lua/"},"url":"https://outsider31000.github.io/VORP_API-docs/posts/core-lua/"}</script><title>VORP CORE | VORP API docs</title><link rel="apple-touch-icon" sizes="180x180" href="/VORP_API-docs/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/VORP_API-docs/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/VORP_API-docs/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/VORP_API-docs/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/VORP_API-docs/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="VORP API docs"><meta name="application-name" content="VORP API docs"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/VORP_API-docs/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/VORP_API-docs/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener("change", () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } } /* ModeToggle */ const toggle = new ModeToggle(); function flipMode() { if (toggle.hasMode) { if (toggle.isSysDarkPrefer) { if (toggle.isLightMode) { toggle.clearMode(); } else { toggle.setLight(); } } else { if (toggle.isDarkMode) { toggle.clearMode(); } else { toggle.setDark(); } } } else { if (toggle.isSysDarkPrefer) { toggle.setLight(); } else { toggle.setDark(); } } toggle.notify(); } /* flipMode() */ </script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/VORP_API-docs/" class="mx-auto"> <img src="/VORP_API-docs/assets/img/sample/vorp.png" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/VORP_API-docs/">VORP API docs</a></div><div class="site-subtitle font-italic">Documentation for vorp framework</div></div><ul class="w-100"><li class="nav-item"> <a href="/VORP_API-docs/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/VORP_API-docs/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/VORP_API-docs/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/VORP_API-docs/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/VORP_API-docs/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/VORPCORE" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://discord.gg/DHGVAbCj7N" aria-label="discord" target="_blank" rel="noopener"> <i class="fab fa-discord"></i> </a> <a href="" aria-label="" target="_blank" rel="noopener"> <i class=""></i> </a> <a href="" aria-label="" target="_blank" rel="noopener"> <i class=""></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/VORP_API-docs/"> Home </a> </span> <span>VORP CORE</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>VORP CORE</h1><div class="post-meta text-muted"> <span> Posted <em class="" data-ts="1652585580" data-df="ll" data-toggle="tooltip" data-placement="bottom"> May 15, 2022 </em> </span> <span> Updated <em class="" data-ts="1658435655" data-df="ll" data-toggle="tooltip" data-placement="bottom"> Jul 21, 2022 </em> </span><div class="d-flex justify-content-between"> <span> By <em> VORPcore </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="1196 words"> <em>6 min</em> read</span></div></div></div><div class="post-content"><h5 id="vorp-core-is-the-master-tool-for-all-your-projects"><span class="mr-2"><strong><em>VORP core is the master tool for all your projects</em></strong></span><a href="#vorp-core-is-the-master-tool-for-all-your-projects" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h5><h1 id="how-to-use"><strong><em>How to use</em></strong></h1><h3 id="core-api"><span class="mr-2"><strong><em>Core API</em></strong></span><a href="#core-api" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="c1">-- at the top of your server side files</span>
+<span class="kd">local</span> <span class="n">VORPcore</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">"getCore"</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">core</span><span class="p">)</span>
+    <span class="n">VORPcore</span> <span class="o">=</span> <span class="n">core</span>
+<span class="k">end</span><span class="p">)</span>
+
+</pre></table></code></div></div><ul><li>The same Event can be called from <code class="language-plaintext highlighter-rouge">client side</code> to use for <code class="language-plaintext highlighter-rouge">with the functions below</code><ul><li>for <code class="language-plaintext highlighter-rouge">Notifications</code><li>for <code class="language-plaintext highlighter-rouge">CallBacks</code></ul></ul><h5 id="hide-or-show-core-ui"><span class="mr-2"><strong><em>Hide or show CORE UI</em></strong></span><a href="#hide-or-show-core-ui" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h5><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>    <span class="c1">-- from server side</span>
+    <span class="kd">local</span> <span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>
+    <span class="n">TriggerClientEvent</span><span class="p">(</span><span class="s2">"vorp:showUi"</span><span class="p">,</span> <span class="n">_source</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span> <span class="c1">--hide</span>
+
+    <span class="c1">-- from client side</span>
+    <span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">"vorp:showUi"</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span> <span class="c1">--show</span>
+
+</pre></table></code></div></div><h1 id="examples"><strong><em>Examples</em></strong></h1><ul><li>API for notifications <code class="language-plaintext highlighter-rouge">client</code> side</ul><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="c1">---------------------------------</span>
+<span class="c1">-- at the top of your client side</span>
+<span class="kd">local</span> <span class="n">VORPcore</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">"getCore"</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">core</span><span class="p">)</span>
+    <span class="n">VORPcore</span> <span class="o">=</span> <span class="n">core</span>
+<span class="k">end</span><span class="p">)</span>
+
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyTip</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyLeft</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"subtitle"</span><span class="p">,</span><span class="s2">"dict"</span><span class="p">,</span><span class="s2">"icon"</span><span class="p">,</span><span class="mi">4000</span><span class="p">,</span><span class="s2">"color"</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyRightTip</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyObjective</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyTop</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"location"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifySimpleTop</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"subtitle"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyAvanced</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"dict"</span><span class="p">,</span><span class="s2">"icon"</span><span class="p">,</span><span class="s2">"color"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyCenter</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyBottomRight</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyFail</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"subtitle"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyDead</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"audioref"</span><span class="p">,</span><span class="s2">""</span><span class="n">audioname</span><span class="s2">""</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyUpdate</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"subtitle"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyWarning</span><span class="p">(</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"subtitle"</span><span class="p">,</span><span class="s2">"audioref"</span><span class="p">,</span><span class="s2">""</span><span class="n">audioname</span><span class="s2">""</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+
+</pre></table></code></div></div><ul><li><code class="language-plaintext highlighter-rouge">Server</code> side</ul><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre><td class="rouge-code"><pre>    <span class="c1">---------------------------------</span>
+    <span class="c1">-- at the top of your client side</span>
+    <span class="kd">local</span> <span class="n">VORPcore</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">"getCore"</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">core</span><span class="p">)</span>
+        <span class="n">VORPcore</span> <span class="o">=</span> <span class="n">core</span>
+    <span class="k">end</span><span class="p">)</span>
+
+    <span class="kd">local</span> <span class="n">_source</span> <span class="o">=</span> <span class="n">source</span> <span class="c1">-- player source</span>
+
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyTip</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyLeft</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"subtitle"</span><span class="p">,</span><span class="s2">"dict"</span><span class="p">,</span><span class="s2">"icon"</span><span class="p">,</span><span class="mi">4000</span><span class="p">,</span><span class="s2">"color"</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyRightTip</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyObjective</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyTop</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"location"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifySimpleTop</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"subtitle"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyAvanced</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"dict"</span><span class="p">,</span><span class="s2">"icon"</span><span class="p">,</span><span class="s2">"color"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyCenter</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyBottomRight</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyFail</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"subtitle"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyDead</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"audioref"</span><span class="p">,</span><span class="s2">"audioname"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyUpdate</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"subtitle"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="n">VORPcore</span><span class="p">.</span><span class="n">NotifyWarning</span><span class="p">(</span><span class="n">_source</span><span class="p">,</span><span class="s2">"title"</span><span class="p">,</span><span class="s2">"subtitle"</span><span class="p">,</span><span class="s2">"audioref"</span><span class="p">,</span><span class="s2">"audioname"</span><span class="p">,</span><span class="mi">4000</span><span class="p">)</span>
+
+</pre></table></code></div></div><h1 id="server-api">Server API</h1><ul><li>Get <code class="language-plaintext highlighter-rouge">max</code> characters</ul><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="c1">-- at the top of the server file</span>
+<span class="kd">local</span> <span class="n">VORPcore</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">"getCore"</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">core</span><span class="p">)</span>
+    <span class="n">VORPcore</span> <span class="o">=</span> <span class="n">core</span>
+<span class="k">end</span><span class="p">)</span>
+
+<span class="c1">-- this returns a number</span>
+<span class="kd">local</span> <span class="n">maxChars</span> <span class="o">=</span> <span class="n">VORPcore</span><span class="p">.</span><span class="n">maxCharacters</span> 
+
+</pre></table></code></div></div><ul><li>Get <code class="language-plaintext highlighter-rouge">Users</code> data</ul><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre><td class="rouge-code"><pre><span class="c1">-- at the top of the server file</span>
+<span class="kd">local</span> <span class="n">VORPcore</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">"getCore"</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">core</span><span class="p">)</span>
+    <span class="n">VORPcore</span> <span class="o">=</span> <span class="n">core</span>
+<span class="k">end</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>
+<span class="c1">-- contains functions and information from all characters</span>
+<span class="kd">local</span> <span class="n">User</span> <span class="o">=</span> <span class="n">VORPcore</span><span class="p">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">_source</span><span class="p">)</span>
+
+<span class="c1">-- Return user group (not character group)</span>
+<span class="kd">local</span> <span class="n">UserGroup</span> <span class="o">=</span> <span class="n">User</span><span class="p">.</span><span class="n">getGroup</span> 
+
+<span class="c1">-- Return character selected by user</span>
+<span class="kd">local</span> <span class="n">Character</span> <span class="o">=</span> <span class="n">User</span><span class="p">.</span><span class="n">getUsedCharacter</span> 
+<span class="c1">-- or</span>
+<span class="kd">local</span> <span class="n">Character</span> <span class="o">=</span> <span class="n">VORPcore</span><span class="p">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">_source</span><span class="p">).</span><span class="n">getUsedCharacter</span>
+
+<span class="c1">--Data you can get</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">identifier</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">charIdentifier</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">group</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">job</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">jobGrade</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">money</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">gold</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">rol</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">xp</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">firstname</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">lastname</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">status</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">coords</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">isdead</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">skin</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">comps</span>
+
+</pre></table></code></div></div><ul><li>Set <code class="language-plaintext highlighter-rouge">functions</code></ul><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre><td class="rouge-code"><pre><span class="c1">-- at the top of the server file</span>
+<span class="kd">local</span> <span class="n">VORPcore</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">"getCore"</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">core</span><span class="p">)</span>
+    <span class="n">VORPcore</span> <span class="o">=</span> <span class="n">core</span>
+<span class="k">end</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>
+
+<span class="kd">local</span> <span class="n">Character</span> <span class="o">=</span> <span class="n">VORPcore</span><span class="p">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">_source</span><span class="p">).</span><span class="n">getUsedCharacter</span>
+
+<span class="c1">--Functions you can set using the API</span>
+
+<span class="n">Character</span><span class="p">.</span><span class="n">setJob</span><span class="p">(</span><span class="s2">"miner"</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">setJobGrade</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">setGroup</span><span class="p">(</span><span class="s2">"admin"</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">setMoney</span><span class="p">(</span><span class="mi">1000</span><span class="p">.</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">setGold</span><span class="p">(</span><span class="mi">1000</span><span class="p">.</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">setRol</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">setXp</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">setFirstname</span><span class="p">(</span><span class="s2">"Sadie"</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">setLastname</span><span class="p">(</span><span class="s2">"Adler"</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">updateSkin</span><span class="p">(</span><span class="s2">"need comps in json"</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">updateComps</span><span class="p">(</span><span class="s2">"need comps in json"</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">addCurrency</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span> <span class="c1">-- Add money 1000 | 0 = money, 1 = gold, 2 = rol</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">removeCurrency</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span> <span class="c1">-- Remove money 1000 | 0 = money, 1 = gold, 2 = rol</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">addXp</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">Character</span><span class="p">.</span><span class="n">removeXp</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+</pre></table></code></div></div><h1 id="instance-players-uising-routing-buckets"><strong><em>Instance Players uising routing buckets</em></strong></h1><ul><li>can only be used from <code class="language-plaintext highlighter-rouge">client</code> side only</ul><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="c1">-- client side only</span>
+<span class="kd">local</span> <span class="n">VORPcore</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">"getCore"</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">core</span><span class="p">)</span>
+    <span class="n">VORPcore</span> <span class="o">=</span> <span class="n">core</span>
+<span class="k">end</span><span class="p">)</span>
+
+<span class="c1">-- to add a players to different instances use his server id + instance number</span>
+<span class="c1">-- to add players to same instance use only the instanceNumber</span>
+<span class="kd">local</span> <span class="n">instanceNumber</span> <span class="o">=</span> <span class="mi">54123</span> <span class="c1">-- any number</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">instancePlayers</span><span class="p">(</span><span class="nb">tonumber</span><span class="p">(</span><span class="n">GetPlayerServerId</span><span class="p">(</span><span class="n">PlayerId</span><span class="p">()))</span><span class="o">+</span> <span class="n">instanceNumber</span><span class="p">)</span>
+
+<span class="c1">-- to remove the player from instance</span>
+<span class="n">VORPcore</span><span class="p">.</span><span class="n">instancePlayers</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> 
+
+</pre></table></code></div></div><h1 id="whitelist-api"><strong><em>WHITELIST API</em></strong></h1><ul><li>get data from white list table</ul><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="c1">-- SERVER SIDE ONLY</span>
+<span class="kd">local</span> <span class="n">VORPWhitelist</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">"getWhitelistTables"</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
+    <span class="n">VORPWhitelist</span> <span class="o">=</span> <span class="n">cb</span>
+<span class="k">end</span><span class="p">)</span>
+
+
+<span class="c1">-- userStaticID this is a static ID used to whitelist/unwhitelist or ban/unban</span>
+<span class="c1">-- needs identifier</span>
+<span class="kd">local</span> <span class="n">getid</span> <span class="o">=</span> <span class="n">VORPwl</span><span class="p">.</span><span class="n">getEntry</span><span class="p">(</span><span class="n">identifier</span><span class="p">).</span><span class="n">getId</span><span class="p">()</span> 
+
+<span class="c1">-- whitelisted returns true or false</span>
+<span class="c1">-- needs identifier</span>
+<span class="kd">local</span> <span class="n">getstatus</span> <span class="o">=</span> <span class="n">VORPwl</span><span class="p">.</span><span class="n">getEntry</span><span class="p">(</span><span class="n">identifier</span><span class="p">).</span><span class="n">getStatus</span><span class="p">()</span> 
+
+<span class="c1">--get players warnings</span>
+<span class="c1">-- use the API core to get source data</span>
+<span class="kd">local</span> <span class="n">_source</span> <span class="o">=</span> <span class="n">source</span> 
+<span class="kd">local</span> <span class="n">User</span> <span class="o">=</span> <span class="n">VorpCore</span><span class="p">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">_source</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">warnstatus</span> <span class="o">=</span> <span class="n">User</span><span class="p">.</span><span class="n">getPlayerwarnings</span><span class="p">()</span> 
+
+</pre></table></code></div></div><h1 id="auto-db-updater">AUTO DB updater</h1><ul><li>you can use this API to create tables or add columns to DB instead of an sql file or for future updates<li>it will check once if they exist once ran<li><code class="language-plaintext highlighter-rouge">Server</code> side ony</ul><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+</pre><td class="rouge-code"><pre>
+<span class="c1">-- top at server side</span>
+<span class="kd">local</span> <span class="n">VORPcore</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">"getCore"</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">core</span><span class="p">)</span>
+    <span class="n">VORPcore</span> <span class="o">=</span> <span class="n">core</span>
+<span class="k">end</span><span class="p">)</span>
+<span class="c1">-- example of how to create tables</span>
+<span class="c1">-- it only does this once</span>
+<span class="kd">local</span> <span class="n">Tables</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">"loadout"</span><span class="p">,</span>
+        <span class="n">script</span> <span class="o">=</span> <span class="s2">"vorp_inventory"</span><span class="p">,</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s">[[
+            CREATE TABLE IF NOT EXISTS `loadout` (
+                `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `identifier` VARCHAR(50) NOT NULL,
+                `charidentifier` INT(11) NULL,
+                `name` VARCHAR(50) NULL DEFAULT NULL,
+                `ammo` VARCHAR(255) NOT NULL DEFAULT '{}',
+                `components` VARCHAR(255) NOT NULL DEFAULT '[]',
+                `dirtlevel` DOUBLE NULL DEFAULT 0,
+                `mudlevel` DOUBLE NULL DEFAULT 0,
+                `conditionlevel` DOUBLE NULL DEFAULT 0,
+                `rustlevel` DOUBLE NULL DEFAULT 0,
+                `used` TINYINT(4) NULL DEFAULT 0,
+                PRIMARY KEY (`id`),
+                INDEX `id` (`id`)
+            )
+            COLLATE='utf8mb4_general_ci'
+            ENGINE=InnoDB
+            AUTO_INCREMENT=2;
+        ]]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">"items"</span><span class="p">,</span>
+        <span class="n">script</span> <span class="o">=</span> <span class="s2">"vorp_inventory"</span><span class="p">,</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s">[[
+            CREATE TABLE IF NOT EXISTS `items` (
+                `item` VARCHAR(50) NOT NULL,
+                `label` VARCHAR(50) NOT NULL,
+                `limit` INT(11) NOT NULL DEFAULT 1,
+                `can_remove` TINYINT(1) NOT NULL DEFAULT 1,
+                `type` VARCHAR(50) NULL DEFAULT NULL,
+                `usable` TINYINT(1) NULL DEFAULT NULL,
+                PRIMARY KEY (`item`) USING BTREE
+            )
+            COLLATE='utf8mb4_general_ci'
+            ENGINE=InnoDB
+            ROW_FORMAT=DYNAMIC;
+        ]]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">-- example on how to create a missing columns in Tables</span>
+<span class="kd">local</span> <span class="n">Updates</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">"dropped"</span><span class="p">,</span>
+        <span class="n">script</span> <span class="o">=</span> <span class="s2">"vorp_inventoryv"</span><span class="p">,</span>
+        <span class="n">find</span> <span class="o">=</span> <span class="s">[[
+            select *
+            from Information_Schema.Columns
+            where Table_Name = 'loadout'
+            AND  Column_Name = 'dropped';
+        ]]</span><span class="p">,</span>
+        <span class="n">sql</span> <span class="o">=</span>  <span class="s">[[
+            ALTER TABLE `loadout` ADD COLUMN `dropped` INT(11) NOT NULL DEFAULT 0;
+        ]]</span>
+    <span class="p">},</span>
+    
+    <span class="p">{</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">"desc"</span><span class="p">,</span>
+        <span class="n">script</span> <span class="o">=</span> <span class="s2">"vorp_inventoryv"</span><span class="p">,</span>
+        <span class="n">find</span> <span class="o">=</span> <span class="s">[[
+            select *
+            from Information_Schema.Columns
+            where Table_Name = 'items'
+            AND  Column_Name = 'desc';
+        ]]</span><span class="p">,</span>
+        <span class="n">sql</span> <span class="o">=</span>  <span class="s">[[
+            ALTER TABLE `items` ADD COLUMN `desc` VARCHAR(5550) NOT NULL DEFAULT 'nice item';
+        ]]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c1">-- DB Updater</span>
+<span class="n">Citizen</span><span class="p">.</span><span class="n">CreateThread</span><span class="p">(</span><span class="k">function</span><span class="p">()</span>
+   <span class="n">VORPcore</span><span class="p">.</span><span class="n">dbUpdateAddTables</span><span class="p">(</span><span class="n">Tables</span><span class="p">)</span>
+   <span class="n">VORPcore</span><span class="p">.</span><span class="n">dbUpdateAddUpdates</span><span class="p">(</span><span class="n">Updates</span><span class="p">)</span>
+
+<span class="k">end</span><span class="p">)</span>
+
+</pre></table></code></div></div><h1 id="api-for-webhooks">API for webhooks</h1><ul><li>from <code class="language-plaintext highlighter-rouge">client</code> or <code class="language-plaintext highlighter-rouge">server</code> side send a webhook to your discord</ul><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>
+<span class="n">VorpCore</span><span class="p">.</span><span class="n">AddWebhook</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">webhook</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">logo</span><span class="p">,</span> <span class="n">footerlogo</span><span class="p">,</span> <span class="n">avatar</span><span class="p">)</span>
+
+</pre></table></code></div></div><div class="table-wrapper"><table><thead><tr><th>Parameter<th>Type<th>Description<th>Required ?<tbody><tr><td>title<td>String<td>title of webhhok<td>True<tr><td>webhhok<td>String<td>link of the channel webhook<td>True<tr><td>description<td>String<td>description of the action logged<td>True<tr><td>color<td>number<td>color of the embed<td>false<tr><td>name<td>string<td>name of the webhook<td>false<tr><td>logo<td>string<td>link of the image<td>false<tr><td>footerlogo<td>string<td>link of the image<td>false<tr><td>avatar<td>string<td>link of the image<td>false</table></div><h1 id="api-charcater-played-hours">API charcater played hours</h1><ul><li>this will return the character played hours that is saved in the database</ul><div class="language-lua highlighter-rouge"><div class="code-header"> <span data-label-text="Lua"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="kd">local</span> <span class="n">User</span> <span class="o">=</span> <span class="n">VorpCore</span><span class="p">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">_source</span><span class="p">)</span>
+   <span class="nb">print</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="n">hours</span><span class="p">)</span>
+</pre></table></code></div></div></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/VORP_API-docs/categories/documentation-lua/'>Documentation Lua</a>, <a href='/VORP_API-docs/categories/core/'>CORE</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/VORP_API-docs/tags/lua/" class="post-tag no-text-decoration" >Lua</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=VORP+CORE+-+VORP+API+docs&url=https%3A%2F%2Foutsider31000.github.io%2FVORP_API-docs%2Fposts%2Fcore-lua%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=VORP+CORE+-+VORP+API+docs&u=https%3A%2F%2Foutsider31000.github.io%2FVORP_API-docs%2Fposts%2Fcore-lua%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Foutsider31000.github.io%2FVORP_API-docs%2Fposts%2Fcore-lua%2F&text=VORP+CORE+-+VORP+API+docs" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/VORP_API-docs/posts/core-lua/">VORP CORE</a><li><a href="/VORP_API-docs/posts/progressbar/">PROGRESSBAR</a><li><a href="/VORP_API-docs/posts/inventory-lua/">INVENTORY</a><li><a href="/VORP_API-docs/posts/characters-lua/">CHARACATERS</a><li><a href="/VORP_API-docs/posts/inputs-lua/">VORP INPUTS</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/VORP_API-docs/tags/lua/">Lua</a> <a class="post-tag" href="/VORP_API-docs/tags/game-references/">game references</a> <a class="post-tag" href="/VORP_API-docs/tags/ui/">UI</a> <a class="post-tag" href="/VORP_API-docs/tags/vorp-introduction/">VORP introduction</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="tail-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/VORP_API-docs/posts/characters-lua/"><div class="card-body"> <em class="small" data-ts="1651980780" data-df="ll" > May 8, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>CHARACATERS</h3><div class="text-muted small"><p> VORP CHARACTERS This code gives you the players clothes and skin from the server side. -- server side TriggerEvent(&quot;vorpcharacter:getPlayerComps&quot;, _source, function(data) local json_skin ...</p></div></div></a></div><div class="card"> <a href="/VORP_API-docs/posts/inputs-lua/"><div class="card-body"> <em class="small" data-ts="1651990200" data-df="ll" > May 8, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>VORP INPUTS</h3><div class="text-muted small"><p> VORP inputs is a tool that is mandatory within the vorp framework. VORP INPUTS LUA download How to use Can only be used from client side Single input local button = &quot;Confirm&quot; --label local pl...</p></div></div></a></div><div class="card"> <a href="/VORP_API-docs/posts/metabolism-lua/"><div class="card-body"> <em class="small" data-ts="1652200440" data-df="ll" > May 10, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>METABOLISM</h3><div class="text-muted small"><p> VORP METABOLISM Lua*</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/VORP_API-docs/posts/inventory-lua/" class="btn btn-outline-primary" prompt="Older"><p>INVENTORY</p></a> <a href="/VORP_API-docs/posts/intro/" class="btn btn-outline-primary" prompt="Newer"><p>INTRO</p></a></div></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center text-muted"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://github.com/VORPCORE">VORPcore</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/VORP_API-docs/tags/lua/">Lua</a> <a class="post-tag" href="/VORP_API-docs/tags/game-references/">game references</a> <a class="post-tag" href="/VORP_API-docs/tags/ui/">UI</a> <a class="post-tag" href="/VORP_API-docs/tags/vorp-introduction/">VORP introduction</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><script src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js"></script> <script> $(function() { function updateMermaid(event) { if (event.source === window && event.data && event.data.direction === ModeToggle.ID) { const mode = event.data.message; if (typeof mermaid === "undefined") { return; } let expectedTheme = (mode === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* Re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } let initTheme = "default"; if ($("html[data-mode=dark]").length > 0 || ($("html[data-mode]").length == 0 && window.matchMedia("(prefers-color-scheme: dark)").matches ) ) { initTheme = "dark"; } let mermaidConf = { theme: initTheme /* <default|dark|forest|neutral> */ }; /* Markdown converts to HTML */ $("pre").has("code.language-mermaid").each(function() { let svgCode = $(this).children().html(); $(this).addClass("unloaded"); $(this).after(`<div class=\"mermaid\">${svgCode}</div>`); }); mermaid.initialize(mermaidConf); window.addEventListener("message", updateMermaid); }); </script><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/VORP_API-docs/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/VORP_API-docs/assets/js/dist/post.min.js"></script> <script> /* see: <https://docs.mathjax.org/en/latest/options/input/tex.html#tex-options> */ MathJax = { tex: { inlineMath: [ /* start/end delimiter pairs for in-line math */ ['$','$'], ['\\(','\\)'] ], displayMath: [ /* start/end delimiter pairs for display math */ ['$$', '$$'], ['\\[', '\\]'] ] } }; </script> <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"> </script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/VORP_API-docs/app.js"></script>
